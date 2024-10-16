@@ -9,8 +9,9 @@
     "license": "MIT",
     "keywords": [],
     "scripts": {
-        "start": "ts-node src/index.ts",
+        "dev": "ts-node src/index.ts",
         "build": "tsc",
+        "start": "node build/index.js",
         "build:main": "tsc -p tsconfig.json",
         "fix": "run-s fix:*",
         "fix:prettier": "prettier \"src/**/*.ts\" --write",
