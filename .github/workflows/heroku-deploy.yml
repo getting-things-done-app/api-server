@@ -1,0 +1,34 @@
+name: Deploy to Heroku
+
+on:
+    push:
+        branches:
+            - main # Change this to the branch you want to trigger deployment
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "22" # Specify your Node.js version
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run build (optional)
+              run: npm run build
+              # Uncomment the above line if you need to build your app before deployment
+              # If you're using TypeScript or another build process, ensure it's here.
+
+            - name: Deploy to Heroku
+              env:
+                  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+              run: |
+                  git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+                  git push heroku HEAD:main -f
